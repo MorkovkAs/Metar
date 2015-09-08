@@ -1,6 +1,5 @@
 package com.antonklimakov.metar;
 
-import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
