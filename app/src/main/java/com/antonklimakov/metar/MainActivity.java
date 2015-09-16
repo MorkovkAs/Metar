@@ -1,28 +1,42 @@
 package com.antonklimakov.metar;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity {
-    TextView textViewICAO;
+public class MainActivity extends Activity {
+    TextView textViewMetar;
+    TextView textViewConditions;
+    TextView textViewTemperature;
+    TextView textViewDewpoint;
+    TextView textViewPressure;
+    TextView textViewWinds;
+    TextView textViewVisibility;
+    TextView textViewCeiling;
+    TextView textViewClouds;
+    TextView textViewWeather;
+
     EditText editTextICAO;
-    String link1 = "http://www.jetplan.com/jeppesen/jsp/weather/aocTextWeather.jsp?icao=";
-    String link2 = "&rt=METAR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +46,17 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
-        textViewICAO = (TextView) findViewById(R.id.textViewICAO);
+        textViewMetar = (TextView) findViewById(R.id.textViewMetar);
+        textViewConditions = (TextView) findViewById(R.id.textViewConditions);
+        textViewTemperature = (TextView) findViewById(R.id.textViewTemperature);
+        textViewDewpoint = (TextView) findViewById(R.id.textViewDewpoint);
+        textViewPressure = (TextView) findViewById(R.id.textViewPressure);
+        textViewWinds = (TextView) findViewById(R.id.textViewWinds);
+        textViewVisibility = (TextView) findViewById(R.id.textViewVisibility);
+        textViewCeiling = (TextView) findViewById(R.id.textViewCeiling);
+        textViewClouds = (TextView) findViewById(R.id.textViewClouds);
+        textViewWeather = (TextView) findViewById(R.id.textViewWeather);
+
         editTextICAO = (EditText) findViewById(R.id.editTextICAO);
 
         editTextICAO.addTextChangedListener(new TextWatcher() {
@@ -52,54 +76,178 @@ public class MainActivity extends ActionBarActivity {
             public void afterTextChanged(Editable s) {
                 if (s.length() == 4) {
                     Log.d("YourTag", "4");
-                    final String ICAO = s.toString();
-                    //final Handler myHandler = new Handler(); // автоматически привязывается к текущему потоку.
-                    Thread myThread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Document doc = null;
-                                try {
-                                    String link = link1 + ICAO + link2;
-                                    doc = Jsoup.connect(link).get();
-                                    final Elements metar = doc.select("body > table:nth-child(4) > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(3) > pre");
-                                    //Log.d("YourTag", metar.toString());
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            textViewICAO.setText(metar.text());
-                                        }
-                                    });
-                                    Log.d("YourTag", metar.text());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                    });
-                    myThread.start();
+                    writeMetar(s.toString());
                 }
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("textViewMetar", textViewMetar.getText().toString());
+        outState.putString("textViewConditions", textViewConditions.getText().toString());
+        outState.putString("textViewTemperature", textViewTemperature.getText().toString());
+        outState.putString("textViewDewpoint", textViewDewpoint.getText().toString());
+        outState.putString("textViewPressure", textViewPressure.getText().toString());
+        outState.putString("textViewWinds", textViewWinds.getText().toString());
+        outState.putString("textViewVisibility", textViewVisibility.getText().toString());
+        outState.putString("textViewCeiling", textViewCeiling.getText().toString());
+        outState.putString("textViewClouds", textViewClouds.getText().toString());
+        outState.putString("textViewWeather", textViewWeather.getText().toString());
+        outState.putString("editTextICAO", editTextICAO.getText().toString());
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        textViewMetar.setText(savedInstanceState.getString("textViewMetar"));
+        textViewConditions.setText(savedInstanceState.getString("textViewConditions"));
+        textViewTemperature.setText(savedInstanceState.getString("textViewTemperature"));
+        textViewDewpoint.setText(savedInstanceState.getString("textViewDewpoint"));
+        textViewPressure.setText(savedInstanceState.getString("textViewPressure"));
+        textViewWinds.setText(savedInstanceState.getString("textViewWinds"));
+        textViewVisibility.setText(savedInstanceState.getString("textViewVisibility"));
+        textViewCeiling.setText(savedInstanceState.getString("textViewCeiling"));
+        textViewClouds.setText(savedInstanceState.getString("textViewClouds"));
+        textViewWeather.setText(savedInstanceState.getString("textViewWeather"));
+        editTextICAO.setText(savedInstanceState.getString("editTextICAO"));
+    }
+
+    private void getMetar(String ICAO) {
+        Document doc;
+        try {
+            String link = "http://aviationweather.gov/adds/metars/?chk_metars=ON&hoursStr=most+recent+only&station_ids=" + ICAO + "&submitmet=Get+info&std_trans=translated";
+            doc = Jsoup.connect(link).get();
+
+            final String metar = doc.select("body > table > tbody > tr:nth-child(3) > td:nth-child(2) > strong").text();
+            final String conditions = doc.select("body > table > tbody > tr:nth-child(4) > td:nth-child(2)").text();
+            final String temperature = doc.select("body > table > tbody > tr:nth-child(5) > td:nth-child(2)").text();
+            final String dewpoint = doc.select("body > table > tbody > tr:nth-child(6) > td:nth-child(2)").text();
+            final String pressure = doc.select("body > table > tbody > tr:nth-child(7) > td:nth-child(2)").text();
+            final String winds = doc.select("body > table > tbody > tr:nth-child(8) > td:nth-child(2)").text();
+            final String visibility = doc.select("body > table > tbody > tr:nth-child(9) > td:nth-child(2)").text();
+            final String ceiling = doc.select("body > table > tbody > tr:nth-child(10) > td:nth-child(2)").text();
+            final String clouds = doc.select("body > table > tbody > tr:nth-child(11) > td:nth-child(2)").text();
+            final String weather = doc.select("body > table > tbody > tr:nth-child(12) > td:nth-child(2)").text();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    textViewMetar.setText(metar);
+                    textViewConditions.setText(conditions);
+                    textViewTemperature.setText(temperature);
+                    textViewDewpoint.setText(dewpoint);
+                    textViewPressure.setText(pressure);
+                    textViewWinds.setText(winds);
+                    textViewVisibility.setText(visibility);
+                    textViewCeiling.setText(ceiling);
+                    textViewClouds.setText(clouds);
+                    textViewWeather.setText(weather);
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeMetar(final String ICAO) {
+        Thread myThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getMetar(ICAO);
+            }
+        });
+        myThread.start();
+    }
+
+    private boolean refreshMetar() {
+        if(editTextICAO.length() == 4) {
+            Toast.makeText(this, "" + editTextICAO.getText().toString() + " is refreshed", Toast.LENGTH_SHORT).show();
+            writeMetar(editTextICAO.getText().toString());
+        }
+        else if (textViewMetar.length() == 0)
+            Toast.makeText(this, "Nothing to refresh.", Toast.LENGTH_SHORT).show();
+        else {
+            String findICAO = textViewMetar.getText().toString().substring(0, 4);
+            writeMetar(findICAO);
+            Toast.makeText(this, "" + findICAO + " is refreshed", Toast.LENGTH_SHORT).show();
+        }
+
         return true;
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the main_activity_actions items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                refreshMetar();
+                return true;
+            case R.id.rate:
+                rateTheApp(this);
+                return true;
+            case R.id.action_settings:
+                //openSettings();
+                return true;
+            case R.id.exit:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    public boolean rateTheApp(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.dialog_about_title);
+
+        final Context con = context;
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                AlertDialog.Builder builderYes = new AlertDialog.Builder(con);
+                builderYes.setTitle(R.string.dialog_rate_title);
+                builderYes.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        //saving();
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.antonklimakov.metar"));
+                        startActivity(intent);
+                    }
+                });
+                builderYes.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builderYes.create();
+                alert.show();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"anton.android.apps@gmail.com"});
+                email.setType("message/rfc822");
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        return true;
     }
 }
