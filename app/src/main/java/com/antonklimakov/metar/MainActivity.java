@@ -1,8 +1,8 @@
 package com.antonklimakov.metar;
 
+import android.app.Activity;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,7 +19,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     TextView textViewICAO;
     EditText editTextICAO;
     String link1 = "http://www.jetplan.com/jeppesen/jsp/weather/aocTextWeather.jsp?icao=";
