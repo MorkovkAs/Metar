@@ -1,15 +1,24 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    signingConfigs {
+        release {
+            storeFile file('E:/ak95/AndroidProjects/androidsign')
+            storePassword 'lloret95'
+            keyAlias "sign"
+            keyPassword "lloret95"
+        }
+    }
+
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.antonklimakov.metar"
         minSdkVersion 15
-        targetSdkVersion 22
-        versionCode 5
-        versionName "0.0.5"
+        targetSdkVersion 23
+        versionCode 6
+        versionName "1.0"
     }
     buildTypes {
         release {

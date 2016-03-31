@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
     TextView textViewWeather;
 
     EditText editTextICAO;
+    String textICAO = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +76,8 @@ public class MainActivity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 4) {
-                    Log.d("YourTag", "4");
-                    writeMetar(s.toString());
+                    textICAO = s.toString().toUpperCase();
+                    writeMetar(textICAO);
                 }
             }
         });
@@ -95,7 +96,9 @@ public class MainActivity extends Activity {
         outState.putString("textViewCeiling", textViewCeiling.getText().toString());
         outState.putString("textViewClouds", textViewClouds.getText().toString());
         outState.putString("textViewWeather", textViewWeather.getText().toString());
+
         outState.putString("editTextICAO", editTextICAO.getText().toString());
+        outState.putString("ICAO", textICAO);
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -110,7 +113,9 @@ public class MainActivity extends Activity {
         textViewCeiling.setText(savedInstanceState.getString("textViewCeiling"));
         textViewClouds.setText(savedInstanceState.getString("textViewClouds"));
         textViewWeather.setText(savedInstanceState.getString("textViewWeather"));
-        editTextICAO.setText(savedInstanceState.getString("editTextICAO"));
+
+        //editTextICAO.setText(savedInstanceState.getString("editTextICAO"));
+        textICAO = savedInstanceState.getString("ICAO");
     }
 
     private void getMetar(String ICAO) {
@@ -162,18 +167,12 @@ public class MainActivity extends Activity {
     }
 
     private boolean refreshMetar() {
-        if(editTextICAO.length() == 4) {
-            Toast.makeText(this, "" + editTextICAO.getText().toString() + " is refreshed", Toast.LENGTH_SHORT).show();
-            writeMetar(editTextICAO.getText().toString());
+        if(textICAO.length() == 4) {
+            Toast.makeText(this, "" + textICAO + " is refreshed", Toast.LENGTH_SHORT).show();
+            editTextICAO.setText(textICAO);
         }
-        else if (textViewMetar.length() == 0)
+        else
             Toast.makeText(this, "Nothing to refresh.", Toast.LENGTH_SHORT).show();
-        else {
-            String findICAO = textViewMetar.getText().toString().substring(0, 4);
-            writeMetar(findICAO);
-            Toast.makeText(this, "" + findICAO + " is refreshed", Toast.LENGTH_SHORT).show();
-        }
-
         return true;
     }
 
@@ -191,11 +190,13 @@ public class MainActivity extends Activity {
             case R.id.refresh:
                 refreshMetar();
                 return true;
-            case R.id.rate:
+            case R.id.rate_settings:
                 rateTheApp(this);
                 return true;
-            case R.id.action_settings:
-                //openSettings();
+            case R.id.more_apps:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://play.google.com/store/apps/developer?id=Anton+Klimakov"));
+                startActivity(intent);
                 return true;
             case R.id.exit:
                 finish();
@@ -242,7 +243,7 @@ public class MainActivity extends Activity {
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.putExtra(Intent.EXTRA_EMAIL, new String[]{"anton.android.apps@gmail.com"});
                 email.setType("message/rfc822");
-                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                startActivity(Intent.createChooser(email, "Choose an Email client:"));
             }
         });
 

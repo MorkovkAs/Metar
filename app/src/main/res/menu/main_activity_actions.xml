@@ -5,23 +5,24 @@
         android:id="@+id/refresh"
         android:showAsAction="ifRoom"
         android:title="@string/refresh"
-        android:icon="@drawable/ic_autorenew_white_24dp"/>
+        android:icon="@drawable/ic_refresh_white_24dp"/>
 
     <item
-        android:id="@+id/rate"
+        android:id="@+id/rate_settings"
         android:showAsAction="ifRoom"
         android:title="@string/rate"
-        android:icon="@drawable/ic_tag_faces_white_24dp"/>
+        android:icon="@drawable/ic_star_border_white_24dp"/>
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/more_apps"
         android:showAsAction="ifRoom"
-        android:title="@string/action_settings"
-        android:icon="@drawable/ic_settings_white_24dp"/>
+        android:title="@string/more_apps"
+        android:icon="@drawable/ic_plus_one_white_24dp"/>
 
     <item
         android:id="@+id/exit"
-        android:showAsAction="never"
-        android:title="@string/exit"/>
+        android:showAsAction="ifRoom"
+        android:title="@string/exit"
+        android:icon="@drawable/ic_exit_to_app_white_24dp"/>
 
 </menu>
