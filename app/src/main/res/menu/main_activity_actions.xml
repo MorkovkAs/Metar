@@ -3,26 +3,38 @@
 
     <item
         android:id="@+id/refresh"
+        android:icon="@drawable/ic_refresh_white_24dp"
         android:showAsAction="ifRoom"
-        android:title="@string/refresh"
-        android:icon="@drawable/ic_refresh_white_24dp"/>
+        android:title="@string/refresh" />
+
+    <item
+        android:id="@+id/set_bookmark"
+        android:icon="@drawable/ic_bookmark_border_white_24dp"
+        android:showAsAction="ifRoom"
+        android:title="@string/set_bookmark" />
+
+    <item
+        android:id="@+id/unset_bookmark"
+        android:icon="@drawable/ic_bookmark_white_24dp"
+        android:showAsAction="ifRoom"
+        android:title="@string/unset_bookmark" />
 
     <item
         android:id="@+id/rate_settings"
+        android:icon="@drawable/ic_grade_white_24dp"
         android:showAsAction="ifRoom"
-        android:title="@string/rate"
-        android:icon="@drawable/ic_star_border_white_24dp"/>
+        android:title="@string/rate" />
 
     <item
         android:id="@+id/more_apps"
+        android:icon="@drawable/ic_apps_white_24dp"
         android:showAsAction="ifRoom"
-        android:title="@string/more_apps"
-        android:icon="@drawable/ic_plus_one_white_24dp"/>
+        android:title="@string/more_apps" />
 
     <item
         android:id="@+id/exit"
+        android:icon="@drawable/ic_exit_to_app_white_24dp"
         android:showAsAction="ifRoom"
-        android:title="@string/exit"
-        android:icon="@drawable/ic_exit_to_app_white_24dp"/>
+        android:title="@string/exit" />
 
 </menu>

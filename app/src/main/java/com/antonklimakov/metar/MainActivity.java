@@ -6,17 +6,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.StrictMode;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.antonklimakov.metar.utils.PrefsName;
+import com.antonklimakov.metar.utils.SavedPreference;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -39,6 +41,8 @@ public class MainActivity extends Activity {
     EditText editTextICAO;
     String textICAO = "";
 
+    SavedPreference savedPreference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,18 +51,19 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        textViewMetar = (TextView) findViewById(R.id.textViewMetar);
-        textViewConditions = (TextView) findViewById(R.id.textViewConditions);
-        textViewTemperature = (TextView) findViewById(R.id.textViewTemperature);
-        textViewDewpoint = (TextView) findViewById(R.id.textViewDewpoint);
-        textViewPressure = (TextView) findViewById(R.id.textViewPressure);
-        textViewWinds = (TextView) findViewById(R.id.textViewWinds);
-        textViewVisibility = (TextView) findViewById(R.id.textViewVisibility);
-        textViewCeiling = (TextView) findViewById(R.id.textViewCeiling);
-        textViewClouds = (TextView) findViewById(R.id.textViewClouds);
-        textViewWeather = (TextView) findViewById(R.id.textViewWeather);
+        textViewMetar = findViewById(R.id.textViewMetar);
+        textViewConditions = findViewById(R.id.textViewConditions);
+        textViewTemperature = findViewById(R.id.textViewTemperature);
+        textViewDewpoint = findViewById(R.id.textViewDewpoint);
+        textViewPressure = findViewById(R.id.textViewPressure);
+        textViewWinds = findViewById(R.id.textViewWinds);
+        textViewVisibility = findViewById(R.id.textViewVisibility);
+        textViewCeiling = findViewById(R.id.textViewCeiling);
+        textViewClouds = findViewById(R.id.textViewClouds);
+        textViewWeather = findViewById(R.id.textViewWeather);
 
-        editTextICAO = (EditText) findViewById(R.id.editTextICAO);
+        editTextICAO = findViewById(R.id.editTextICAO);
+        savedPreference = new SavedPreference();
 
         editTextICAO.addTextChangedListener(new TextWatcher() {
 
@@ -78,6 +83,7 @@ public class MainActivity extends Activity {
                 if (s.length() == 4) {
                     textICAO = s.toString().toUpperCase();
                     writeMetar(textICAO);
+                    invalidateOptionsMenu();
                 }
             }
         });
@@ -167,11 +173,10 @@ public class MainActivity extends Activity {
     }
 
     private boolean refreshMetar() {
-        if(textICAO.length() == 4) {
+        if (textICAO.length() == 4) {
             Toast.makeText(this, "" + textICAO + " is refreshed", Toast.LENGTH_SHORT).show();
             editTextICAO.setText(textICAO);
-        }
-        else
+        } else
             Toast.makeText(this, "Nothing to refresh.", Toast.LENGTH_SHORT).show();
         return true;
     }
@@ -184,11 +189,37 @@ public class MainActivity extends Activity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    // обновление меню
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // пункты меню с ID группы = 1 видны, если в CheckBox стоит галка
+        boolean isSaved = savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO);
+
+        menu.getItem(1).setVisible(!isSaved);
+        menu.getItem(2).setVisible(isSaved);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh:
                 refreshMetar();
+                return true;
+            case R.id.set_bookmark:
+                if (!savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO)) {
+                    savedPreference.addSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO);
+                    Toast.makeText(this, getString(R.string.add_bookmark), Toast.LENGTH_SHORT).show();
+                }
+                invalidateOptionsMenu();
+                return true;
+            case R.id.unset_bookmark:
+                if (savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO)) {
+                    savedPreference.removeSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO);
+                    Toast.makeText(this, getString(R.string.remove_bookmark), Toast.LENGTH_SHORT).show();
+                }
+                invalidateOptionsMenu();
                 return true;
             case R.id.rate_settings:
                 rateTheApp(this);
