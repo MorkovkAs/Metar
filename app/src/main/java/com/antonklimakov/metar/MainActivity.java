@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -25,8 +26,9 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
-
 public class MainActivity extends Activity {
+    SwipeRefreshLayout swipeRefreshLayout;
+
     TextView textViewMetar;
     TextView textViewConditions;
     TextView textViewTemperature;
@@ -50,6 +52,17 @@ public class MainActivity extends Activity {
         StrictMode.setThreadPolicy(policy);
 
         setContentView(R.layout.activity_main);
+        savedPreference = new SavedPreference();
+
+        swipeRefreshLayout = findViewById(R.id.swipe);
+        swipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                refreshMetar();
+            }
+        });
 
         textViewMetar = findViewById(R.id.textViewMetar);
         textViewConditions = findViewById(R.id.textViewConditions);
@@ -63,8 +76,6 @@ public class MainActivity extends Activity {
         textViewWeather = findViewById(R.id.textViewWeather);
 
         editTextICAO = findViewById(R.id.editTextICAO);
-        savedPreference = new SavedPreference();
-
         editTextICAO.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -81,14 +92,16 @@ public class MainActivity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 4) {
-                    textICAO = s.toString().toUpperCase();
+                    if (!s.toString().equalsIgnoreCase(textICAO)) {
+                        textICAO = s.toString().toUpperCase();
+                        savedPreference.addSaved(getBaseContext(), PrefsName.HISTORY, new Airport(textICAO));
+                    }
                     writeMetar(textICAO);
                     invalidateOptionsMenu();
                 }
             }
         });
     }
-
 
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -154,11 +167,13 @@ public class MainActivity extends Activity {
                     textViewCeiling.setText(ceiling);
                     textViewClouds.setText(clouds);
                     textViewWeather.setText(weather);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             });
 
         } catch (IOException e) {
             e.printStackTrace();
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 
@@ -172,18 +187,18 @@ public class MainActivity extends Activity {
         myThread.start();
     }
 
-    private boolean refreshMetar() {
+    private void refreshMetar() {
         if (textICAO.length() == 4) {
             Toast.makeText(this, "" + textICAO + " is refreshed", Toast.LENGTH_SHORT).show();
             editTextICAO.setText(textICAO);
-        } else
+        } else {
             Toast.makeText(this, "Nothing to refresh.", Toast.LENGTH_SHORT).show();
-        return true;
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the main_activity_actions items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
@@ -192,11 +207,10 @@ public class MainActivity extends Activity {
     // обновление меню
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // пункты меню с ID группы = 1 видны, если в CheckBox стоит галка
         boolean isSaved = savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO);
 
-        menu.getItem(1).setVisible(!isSaved);
-        menu.getItem(2).setVisible(isSaved);
+        menu.getItem(0).setVisible(!isSaved);
+        menu.getItem(1).setVisible(isSaved);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -207,12 +221,20 @@ public class MainActivity extends Activity {
             case R.id.refresh:
                 refreshMetar();
                 return true;
+            case R.id.history:
+                Intent intentNew = new Intent(this, TabbedActivity.class);
+                startActivity(intentNew);
+                return true;
             case R.id.set_bookmark:
-                if (!savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO)) {
-                    savedPreference.addSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO);
-                    Toast.makeText(this, getString(R.string.add_bookmark), Toast.LENGTH_SHORT).show();
+                if (textICAO.length() == 4) {
+                    if (!savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO)) {
+                        savedPreference.addSaved(getApplicationContext(), PrefsName.FAVORITE, new Airport(textICAO));
+                        Toast.makeText(this, getString(R.string.add_bookmark), Toast.LENGTH_SHORT).show();
+                    }
+                    invalidateOptionsMenu();
+                } else {
+                    Toast.makeText(this, "Nothing to add to Favorites.", Toast.LENGTH_SHORT).show();
                 }
-                invalidateOptionsMenu();
                 return true;
             case R.id.unset_bookmark:
                 if (savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO)) {

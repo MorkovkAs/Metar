@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/refresh"
-        android:icon="@drawable/ic_refresh_white_24dp"
-        android:showAsAction="ifRoom"
-        android:title="@string/refresh" />
-
-    <item
         android:id="@+id/set_bookmark"
         android:icon="@drawable/ic_bookmark_border_white_24dp"
         android:showAsAction="ifRoom"
@@ -18,6 +12,18 @@
         android:icon="@drawable/ic_bookmark_white_24dp"
         android:showAsAction="ifRoom"
         android:title="@string/unset_bookmark" />
+
+    <item
+        android:id="@+id/history"
+        android:icon="@drawable/ic_history_white_24dp"
+        android:showAsAction="ifRoom"
+        android:title="@string/history" />
+
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        android:showAsAction="ifRoom"
+        android:title="@string/refresh" />
 
     <item
         android:id="@+id/rate_settings"

@@ -5,12 +5,16 @@
     <string name="set_bookmark">Add to favorites</string>
     <string name="unset_bookmark">Remove from favorites</string>
     <string name="history">History</string>
+    <string name="favorite">Favorite</string>
     <string name="rate">Rate the app</string>
     <string name="more_apps">More apps</string>
     <string name="exit">Exit</string>
 
     <string name="add_bookmark">Added to Favorites</string>
     <string name="remove_bookmark">Removed from Favorites</string>
+    <string name="no_favorites_items">No Favorites</string>
+    <string name="no_favorites_msg">Long press on item to add to favorites.</string>
+    <string name="favorites_remove_msg">Long press on item to remove from favorites.</string>
 
     <string name="dialog_about_title">Do you like the app?</string>
     <string name="dialog_rate_title">Do you want to rate the app?</string>

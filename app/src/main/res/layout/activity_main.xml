@@ -1,287 +1,270 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:src="@drawable/man"
-        android:padding="0sp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:paddingTop="@dimen/activity_under_action_bar"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="6"
-        android:maxLength="4"
-        android:id="@+id/editTextICAO"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:hint="ICAO"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        android:textColor="#34ff5d"
-        android:textColorHint="#34ff5d"/>
-
-    <TableLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:shrinkColumns="1"
-        android:layout_below="@+id/editTextICAO"
-        android:padding="4dip"
-        android:id="@+id/tableLayout">
+        android:layout_height="wrap_content">
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/TextView1"
-                android:text="METAR text:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
-
-            <TextView
-                android:id="@+id/textViewMetar"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="0dip">
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/man" />
 
-            <TextView
-                android:id="@+id/TextView2"
-                android:text="Conditions at:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
-
-            <TextView
-                android:id="@+id/textViewConditions"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/editTextICAO"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="0dip">
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:ems="6"
+            android:hint="ICAO"
+            android:maxLength="4"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_under_action_bar"
+            android:textColor="#34ff5d"
+            android:textColorHint="#34ff5d" />
 
-            <TextView
-                android:id="@+id/TextView3"
-                android:text="Temperature:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
-
-            <TextView
-                android:id="@+id/textViewTemperature"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow4"
+        <TableLayout
+            android:id="@+id/tableLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="0dip">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/editTextICAO"
+            android:layout_centerHorizontal="true"
+            android:padding="4dip"
+            android:shrinkColumns="1">
 
-            <TextView
-                android:id="@+id/TextView4"
-                android:text="Dewpoint:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textViewDewpoint"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
+                <TextView
+                    android:id="@+id/TextView1"
+                    android:gravity="right"
+                    android:text="METAR text:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
 
-        <TableRow
-            android:id="@+id/tableRow5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="0dip">
+                <TextView
+                    android:id="@+id/textViewMetar"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/TextView5"
-                android:text="Pressure:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dip">
 
-            <TextView
-                android:id="@+id/textViewPressure"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
+                <TextView
+                    android:id="@+id/TextView2"
+                    android:gravity="right"
+                    android:text="Conditions at:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
 
-        <TableRow
-            android:id="@+id/tableRow6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="0dip">
+                <TextView
+                    android:id="@+id/textViewConditions"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/TextView6"
-                android:text="Winds:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dip">
 
-            <TextView
-                android:id="@+id/textViewWinds"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
+                <TextView
+                    android:id="@+id/TextView3"
+                    android:gravity="right"
+                    android:text="Temperature:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
 
-        <TableRow
-            android:id="@+id/tableRow7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="0dip">
+                <TextView
+                    android:id="@+id/textViewTemperature"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/TextView7"
-                android:text="Visibility:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dip">
 
-            <TextView
-                android:id="@+id/textViewVisibility"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
+                <TextView
+                    android:id="@+id/TextView4"
+                    android:gravity="right"
+                    android:text="Dewpoint:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
 
-        <TableRow
-            android:id="@+id/tableRow8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="0dip">
+                <TextView
+                    android:id="@+id/textViewDewpoint"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/TextView8"
-                android:text="Ceiling:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
+            <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dip">
 
-            <TextView
-                android:id="@+id/textViewCeiling"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
+                <TextView
+                    android:id="@+id/TextView5"
+                    android:gravity="right"
+                    android:text="Pressure:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
 
-        <TableRow
-            android:id="@+id/tableRow9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="0dip">
+                <TextView
+                    android:id="@+id/textViewPressure"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/TextView9"
-                android:text="Clouds:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
+            <TableRow
+                android:id="@+id/tableRow6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dip">
 
-            <TextView
-                android:id="@+id/textViewClouds"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
+                <TextView
+                    android:id="@+id/TextView6"
+                    android:gravity="right"
+                    android:text="Winds:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
 
-        <TableRow
-            android:id="@+id/tableRow10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="0dip">
+                <TextView
+                    android:id="@+id/textViewWinds"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/TextView10"
-                android:text="Weather:"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:gravity="right"
-                android:textSize="13sp">
-            </TextView>
+            <TableRow
+                android:id="@+id/tableRow7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dip">
 
-            <TextView
-                android:id="@+id/textViewWeather"
-                android:typeface="serif"
-                android:textColor="@color/text_color"
-                android:paddingLeft="5dip"
-                android:textSize="13sp">
-            </TextView>
-        </TableRow>
-    </TableLayout>
+                <TextView
+                    android:id="@+id/TextView7"
+                    android:gravity="right"
+                    android:text="Visibility:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/textViewVisibility"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dip">
+
+                <TextView
+                    android:id="@+id/TextView8"
+                    android:gravity="right"
+                    android:text="Ceiling:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/textViewCeiling"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dip">
+
+                <TextView
+                    android:id="@+id/TextView9"
+                    android:gravity="right"
+                    android:text="Clouds:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/textViewClouds"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dip">
+
+                <TextView
+                    android:id="@+id/TextView10"
+                    android:gravity="right"
+                    android:text="Weather:"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/textViewWeather"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    android:typeface="serif" />
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

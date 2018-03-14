@@ -2,9 +2,14 @@ package com.antonklimakov.metar.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.antonklimakov.metar.Airport;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SavedPreference {
 
@@ -14,56 +19,87 @@ public class SavedPreference {
         super();
     }
 
-    public void addSaved(Context context, PrefsName prefsName, String item) {
-        item = item.toUpperCase();
-        Set<String> items = getItems(context, prefsName);
+    public void addSaved(Context context, PrefsName prefsName, Airport item) {
+        item = item;
+        List<Airport> items = getItems(context, prefsName);
         if (items == null) {
-            items = new HashSet<>();
+            items = new ArrayList<>();
         }
         items.add(item);
         saveItems(context, prefsName, items);
     }
 
-    public boolean isItemSaved(Context context, PrefsName prefsName, String item) {
-        item = item.toUpperCase();
-        Set<String> items = getItems(context, prefsName);
+    public boolean isItemSaved(Context context, PrefsName prefsName, Airport item) {
+        List<Airport> items = getItems(context, prefsName);
         return items != null && items.contains(item);
     }
 
-    public void removeSaved(Context context, PrefsName prefsName, String item) {
-        item = item.toUpperCase();
-        Set<String> items = getItems(context, prefsName);
+    public boolean isItemSaved(Context context, PrefsName prefsName, String airportIcao) {
+        List<Airport> items = getItems(context, prefsName);
+        if (items != null) {
+            for (Airport airport : items) {
+                if (airport.getIcao().equalsIgnoreCase(airportIcao)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void removeSaved(Context context, PrefsName prefsName, Airport item) {
+        List<Airport> items = getItems(context, prefsName);
         if (items != null) {
             items.remove(item);
             saveItems(context, prefsName, items);
         }
     }
 
+    public void removeSaved(Context context, PrefsName prefsName, String airportIcao) {
+        List<Airport> items = getItems(context, prefsName);
+        if (items != null) {
+            for (Airport airport : items) {
+                if (airport.getIcao().equalsIgnoreCase(airportIcao)) {
+                    items.remove(airport);
+                    break;
+                }
+            }
+            saveItems(context, prefsName, items);
+        }
+    }
+
     public void removeAllSaved(Context context, PrefsName prefsName) {
-        Set<String> items = getItems(context, prefsName);
+        List<Airport> items = getItems(context, prefsName);
         if (items != null) {
             items.clear();
             saveItems(context, prefsName, items);
         }
     }
 
-    private void saveItems(Context context, PrefsName prefsName, Set<String> items) {
-        SharedPreferences settings;
+    public void saveItems(Context context, PrefsName prefsName, List<Airport> items) {
+        SharedPreferences preference;
+        preference = context.getSharedPreferences(APP_PREFS_NAME, Context.MODE_PRIVATE);
 
-        settings = context.getSharedPreferences(APP_PREFS_NAME, Context.MODE_PRIVATE);
-        settings.edit()
-                .putStringSet(prefsName.name(), items)
-                .apply();
+        Editor editor = preference.edit();
+        Gson gson = new Gson();
+        String jsonItems = gson.toJson(items);
+        editor.putString(prefsName.name(), jsonItems);
+        editor.apply();
     }
 
-    private Set<String> getItems(Context context, PrefsName prefsName) {
-        SharedPreferences settings;
-        Set<String> items;
+    public List<Airport> getItems(Context context, PrefsName prefsName) {
+        SharedPreferences preference;
+        List<Airport> items;
 
-        settings = context.getSharedPreferences(APP_PREFS_NAME, Context.MODE_PRIVATE);
+        preference = context.getSharedPreferences(APP_PREFS_NAME, Context.MODE_PRIVATE);
 
-        if (settings.contains(prefsName.name())) {
-            items = settings.getStringSet(prefsName.name(), null);
+        if (preference.contains(prefsName.name())) {
+            String jsonItems = preference.getString(prefsName.name(), null);
+            Gson gson = new Gson();
+            Airport[] favoriteItems = gson.fromJson(jsonItems, Airport[].class);
+
+            items = Arrays.asList(favoriteItems);
+            items = new ArrayList<>(items);
         } else {
             return null;
         }
