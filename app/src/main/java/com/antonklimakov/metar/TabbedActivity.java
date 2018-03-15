@@ -13,9 +13,9 @@ import com.antonklimakov.metar.fragments.AirportListFragment;
 
 public class TabbedActivity extends FragmentActivity {
 
-    private Fragment contentFragment;
     AirportListFragment airportListFragment;
     AirportFavoriteListFragment favListFragment;
+    private Fragment contentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class TabbedActivity extends FragmentActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
 		/*
-		 * This is called when orientation is changed.
+         * This is called when orientation is changed.
 		 */
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey("content")) {
@@ -68,11 +68,13 @@ public class TabbedActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
             case R.id.menu_favorites:
                 setFragmentTitle(R.string.favorite);
                 favListFragment = new AirportFavoriteListFragment();
                 switchContent(favListFragment, AirportFavoriteListFragment.ARG_ITEM_ID);
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -80,7 +82,7 @@ public class TabbedActivity extends FragmentActivity {
 
     public void switchContent(Fragment fragment, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        while (fragmentManager.popBackStackImmediate());
+        while (fragmentManager.popBackStackImmediate()) ;
 
         if (fragment != null) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -96,24 +98,8 @@ public class TabbedActivity extends FragmentActivity {
 
     protected void setFragmentTitle(int resourseId) {
         setTitle(resourseId);
-        getActionBar().setTitle(resourseId);
-
-    }
-
-    /*
-     * We call super.onBackPressed(); when the stack entry count is > 0. if it
-     * is instanceof AirportListFragment or if the stack entry count is == 0, then
-     * we finish the activity.
-     * In other words, from AirportListFragment on back press it quits the app.
-     */
-    @Override
-    public void onBackPressed() {
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            super.onBackPressed();
-        } else if (contentFragment instanceof AirportListFragment
-                || fm.getBackStackEntryCount() == 0) {
-            finish();
+        if (getActionBar() != null) {
+            getActionBar().setTitle(resourseId);
         }
     }
 }

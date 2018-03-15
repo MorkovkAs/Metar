@@ -47,10 +47,9 @@ public class AirportListAdapter extends ArrayAdapter<Airport> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.airport_list_item, null);
             holder = new ViewHolder();
             holder.airportIcaoTxt = convertView.findViewById(R.id.txt_airport_icao);

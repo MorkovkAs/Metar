@@ -66,19 +66,16 @@ public class AirportListFragment extends Fragment implements AdapterView.OnItemC
         String tag = button.getTag().toString();
         if (tag.equalsIgnoreCase("grey")) {
             sharedPreference.addSaved(activity, PrefsName.FAVORITE, airports.get(position));
-            Toast.makeText(activity,
-                    activity.getResources().getString(R.string.add_bookmark),
-                    Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(activity, activity.getResources().getString(R.string.add_bookmark), Toast.LENGTH_SHORT).show();
             button.setTag("red");
             button.setImageResource(R.drawable.ic_bookmark_white_24dp);
+            airportListAdapter.notifyDataSetChanged();
         } else {
             sharedPreference.removeSaved(activity, PrefsName.FAVORITE, airports.get(position));
             button.setTag("grey");
             button.setImageResource(R.drawable.ic_bookmark_border_white_24dp);
-            Toast.makeText(activity,
-                    activity.getResources().getString(R.string.remove_bookmark),
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, activity.getResources().getString(R.string.remove_bookmark), Toast.LENGTH_SHORT).show();
+            airportListAdapter.notifyDataSetChanged();
         }
 
         return true;

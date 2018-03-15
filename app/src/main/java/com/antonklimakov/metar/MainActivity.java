@@ -133,8 +133,9 @@ public class MainActivity extends Activity {
         textViewClouds.setText(savedInstanceState.getString("textViewClouds"));
         textViewWeather.setText(savedInstanceState.getString("textViewWeather"));
 
-        //editTextICAO.setText(savedInstanceState.getString("editTextICAO"));
+        editTextICAO.setText(savedInstanceState.getString("editTextICAO"));
         textICAO = savedInstanceState.getString("ICAO");
+        invalidateOptionsMenu();
     }
 
     private void getMetar(String ICAO) {
