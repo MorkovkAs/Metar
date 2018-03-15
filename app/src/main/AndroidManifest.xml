@@ -10,7 +10,6 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/MyActionBarTheme">
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -20,10 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".TabbedActivity"
             android:label="@string/history"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.antonklimakov.metar.MainActivity" />
+        </activity>
     </application>
 </manifest>

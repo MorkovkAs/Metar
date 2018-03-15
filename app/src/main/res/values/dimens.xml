@@ -3,4 +3,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_under_action_bar">50dp</dimen>
+    <dimen name="activity_under_tabs">100dp</dimen>
 </resources>
