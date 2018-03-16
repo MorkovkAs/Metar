@@ -2,9 +2,8 @@
 <resources>
     <color name="text_color">#ffffff</color>
 
-    <color name="orange">#FF9900</color>
-    <color name="green">#009900</color>
-    <color name="blue">#000099</color>
+    <color name="green">#34ff5d</color>
+    <color name="blue">#33b5e5</color>
 
     <color name="transparent">#00000000</color>
     <color name="airport_list_item_bg">#5b5959</color>

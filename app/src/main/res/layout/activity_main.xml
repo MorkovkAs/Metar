@@ -35,8 +35,8 @@
             android:maxLength="4"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_under_action_bar"
-            android:textColor="#34ff5d"
-            android:textColorHint="#34ff5d" />
+            android:textColor="@color/green"
+            android:textColorHint="@color/green" />
 
         <TableLayout
             android:id="@+id/tableLayout"

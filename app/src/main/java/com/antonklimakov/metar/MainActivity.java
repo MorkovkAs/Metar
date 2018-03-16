@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -55,7 +56,14 @@ public class MainActivity extends Activity {
         savedPreference = new SavedPreference();
 
         swipeRefreshLayout = findViewById(R.id.swipe);
-        swipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
+        Resources resources = getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            swipeRefreshLayout.setProgressViewOffset(true, 0, resources.getDimensionPixelSize(resourceId));
+        } else {
+            swipeRefreshLayout.setProgressViewOffset(false, 0, 50);
+        }
+        swipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.green, R.color.view_divider_color);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
