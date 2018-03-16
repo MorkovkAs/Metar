@@ -103,6 +103,13 @@ public class AirportListAdapter extends ArrayAdapter<Airport> {
         notifyDataSetChanged();
     }
 
+    @Override
+    public void clear() {
+        super.clear();
+        airports.clear();
+        notifyDataSetChanged();
+    }
+
     private class ViewHolder {
         TextView airportIcaoTxt;
         ImageView favoriteImg;

@@ -15,15 +15,9 @@
 
     <item
         android:id="@+id/history"
-        android:icon="@drawable/ic_history_white_24dp"
+        android:icon="@drawable/ic_schedule_white_24dp"
         android:showAsAction="ifRoom"
         android:title="@string/history" />
-
-    <item
-        android:id="@+id/refresh"
-        android:icon="@drawable/ic_refresh_white_24dp"
-        android:showAsAction="ifRoom"
-        android:title="@string/refresh" />
 
     <item
         android:id="@+id/rate_settings"
@@ -36,6 +30,12 @@
         android:icon="@drawable/ic_apps_white_24dp"
         android:showAsAction="ifRoom"
         android:title="@string/more_apps" />
+
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        android:showAsAction="ifRoom"
+        android:title="@string/refresh" />
 
     <item
         android:id="@+id/exit"

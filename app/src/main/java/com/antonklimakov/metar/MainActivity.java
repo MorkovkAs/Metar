@@ -183,6 +183,7 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 getMetar(ICAO);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
         myThread.start();
@@ -205,7 +206,6 @@ public class MainActivity extends Activity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    // обновление меню
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean isSaved = savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO);

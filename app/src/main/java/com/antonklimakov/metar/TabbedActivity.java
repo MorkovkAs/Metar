@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.antonklimakov.metar.fragments.AirportFavoriteListFragment;
 import com.antonklimakov.metar.fragments.AirportListFragment;
@@ -14,7 +15,6 @@ public class TabbedActivity extends Activity implements ActionBar.TabListener {
 
     AirportListFragment airportListFragment;
     AirportFavoriteListFragment favListFragment;
-    private Fragment contentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +44,10 @@ public class TabbedActivity extends Activity implements ActionBar.TabListener {
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
         switch (tab.getText().toString()) {
             case "History":
-                setFragmentTitle(R.string.history);
                 airportListFragment = new AirportListFragment();
                 switchContent(airportListFragment, ft, AirportListFragment.ARG_ITEM_ID);
                 break;
             case "Favorite":
-                setFragmentTitle(R.string.favorite);
                 favListFragment = new AirportFavoriteListFragment();
                 switchContent(favListFragment, ft, AirportFavoriteListFragment.ARG_ITEM_ID);
                 break;
@@ -62,13 +60,16 @@ public class TabbedActivity extends Activity implements ActionBar.TabListener {
 
     public void switchContent(Fragment fragment, FragmentTransaction transaction, String tag) {
         transaction.replace(R.id.content_frame, fragment, tag);
-        contentFragment = fragment;
     }
 
-    protected void setFragmentTitle(int resourseId) {
-        setTitle(resourseId);
-        if (getActionBar() != null) {
-            getActionBar().setTitle(resourseId);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

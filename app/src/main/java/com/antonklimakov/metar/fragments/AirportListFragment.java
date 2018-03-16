@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,6 +35,7 @@ public class AirportListFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         activity = getActivity();
         sharedPreference = new SavedPreference();
         airports = sharedPreference.getItems(activity, PrefsName.HISTORY);
@@ -40,17 +44,13 @@ public class AirportListFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_airport_list, container, false);
-        findViewsById(view);
+        airportListView = view.findViewById(R.id.list_airport);
 
         airportListAdapter = new AirportListAdapter(activity, airports);
         airportListView.setAdapter(airportListAdapter);
         airportListView.setOnItemClickListener(this);
         airportListView.setOnItemLongClickListener(this);
         return view;
-    }
-
-    private void findViewsById(View view) {
-        airportListView = view.findViewById(R.id.list_airport);
     }
 
     @Override
@@ -82,9 +82,22 @@ public class AirportListFragment extends Fragment implements AdapterView.OnItemC
     }
 
     @Override
-    public void onResume() {
-        getActivity().setTitle(R.string.history);
-        getActivity().getActionBar().setTitle(R.string.app_name);
-        super.onResume();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.history_actions, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.clean_history:
+                sharedPreference.removeAllSaved(activity, PrefsName.HISTORY);
+                airportListAdapter.clear();
+                Toast.makeText(activity, getString(R.string.removed_history), Toast.LENGTH_SHORT).show();
+                airportListAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -89,7 +89,7 @@ public class SavedPreference {
 
     public List<Airport> getItems(Context context, PrefsName prefsName) {
         SharedPreferences preference;
-        List<Airport> items;
+        List<Airport> items = null;
 
         preference = context.getSharedPreferences(APP_PREFS_NAME, Context.MODE_PRIVATE);
 
@@ -98,10 +98,10 @@ public class SavedPreference {
             Gson gson = new Gson();
             Airport[] favoriteItems = gson.fromJson(jsonItems, Airport[].class);
 
-            items = Arrays.asList(favoriteItems);
-            items = new ArrayList<>(items);
-        } else {
-            return null;
+            if (favoriteItems != null) {
+                items = Arrays.asList(favoriteItems);
+                items = new ArrayList<>(items);
+            }
         }
 
         return items;

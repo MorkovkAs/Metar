@@ -9,12 +9,14 @@
     <string name="rate">Rate the app</string>
     <string name="more_apps">More apps</string>
     <string name="exit">Exit</string>
+    <string name="remove_history">Remove all</string>
+    <string name="removed_history">Removed from History</string>
 
     <string name="add_bookmark">Added to Favorites</string>
     <string name="remove_bookmark">Removed from Favorites</string>
     <string name="no_favorites_items">No Favorites</string>
-    <string name="no_favorites_msg">Long press on item to add to favorites.</string>
-    <string name="favorites_remove_msg">Long press on item to remove from favorites.</string>
+    <string name="no_favorites_msg">Long press on item to add to favorites</string>
+    <string name="favorites_remove_msg">Long press on item to remove from favorites</string>
 
     <string name="dialog_about_title">Do you like the app?</string>
     <string name="dialog_rate_title">Do you want to rate the app?</string>
@@ -22,10 +24,4 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="mail">Choose an Email client:</string>
-    <string name="title_activity_tabs">TabsActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
