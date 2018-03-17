@@ -2,6 +2,7 @@ package com.antonklimakov.metar.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -56,12 +57,19 @@ public class AirportListFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Airport airport = (Airport) parent.getItemAtPosition(position);
-        Toast.makeText(activity, airport.toString(), Toast.LENGTH_LONG).show();
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("icao", airport.getIcao());
+        activity.setResult(Activity.RESULT_OK, returnIntent);
+        activity.finish();
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> arg0, View view, int position, long arg3) {
         ImageView button = view.findViewById(R.id.imgbtn_favorite);
+        if (airports.get(position).getIcao() == null) {
+            return false;
+        }
 
         String tag = button.getTag().toString();
         if (tag.equalsIgnoreCase("grey")) {

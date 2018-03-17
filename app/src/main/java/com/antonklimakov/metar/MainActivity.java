@@ -102,13 +102,23 @@ public class MainActivity extends Activity {
                 if (s.length() == 4) {
                     if (!s.toString().equalsIgnoreCase(textICAO)) {
                         textICAO = s.toString().toUpperCase();
-                        savedPreference.addSaved(getBaseContext(), PrefsName.HISTORY, new Airport(textICAO));
                     }
                     writeMetar(textICAO);
                     invalidateOptionsMenu();
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                textICAO = data.getStringExtra("icao");
+                refreshMetar();
+            }
+        }
     }
 
     protected void onSaveInstanceState(Bundle outState) {
@@ -150,7 +160,7 @@ public class MainActivity extends Activity {
         Document doc;
         try {
             String link = "http://aviationweather.gov/adds/metars/?chk_metars=ON&hoursStr=most+recent+only&station_ids=" + ICAO + "&submitmet=Get+info&std_trans=translated";
-            doc = Jsoup.connect(link).get();
+            doc = Jsoup.connect(link).timeout(30000).get();
 
             final String metar = doc.select("body > table > tbody > tr:nth-child(3) > td:nth-child(2) > strong").text();
             final String conditions = doc.select("body > table > tbody > tr:nth-child(4) > td:nth-child(2)").text();
@@ -162,6 +172,10 @@ public class MainActivity extends Activity {
             final String ceiling = doc.select("body > table > tbody > tr:nth-child(10) > td:nth-child(2)").text();
             final String clouds = doc.select("body > table > tbody > tr:nth-child(11) > td:nth-child(2)").text();
             final String weather = doc.select("body > table > tbody > tr:nth-child(12) > td:nth-child(2)").text();
+
+            if (metar != null && !metar.equals("")) {
+                savedPreference.addSaved(getBaseContext(), PrefsName.HISTORY, new Airport(textICAO, conditions.substring(conditions.indexOf("(") + 1, conditions.indexOf(")"))));
+            }
 
             runOnUiThread(new Runnable() {
                 @Override
@@ -176,13 +190,19 @@ public class MainActivity extends Activity {
                     textViewCeiling.setText(ceiling);
                     textViewClouds.setText(clouds);
                     textViewWeather.setText(weather);
-                    swipeRefreshLayout.setRefreshing(false);
+                    stopRefreshing();
                 }
             });
 
         } catch (IOException e) {
             e.printStackTrace();
-            swipeRefreshLayout.setRefreshing(false);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "Failed to update", Toast.LENGTH_SHORT).show();
+                }
+            });
+            stopRefreshing();
         }
     }
 
@@ -191,7 +211,7 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 getMetar(ICAO);
-                swipeRefreshLayout.setRefreshing(false);
+                stopRefreshing();
             }
         });
         myThread.start();
@@ -199,11 +219,11 @@ public class MainActivity extends Activity {
 
     private void refreshMetar() {
         if (textICAO.length() == 4) {
-            Toast.makeText(this, "" + textICAO + " is refreshed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + textICAO + " is refreshing", Toast.LENGTH_SHORT).show();
             editTextICAO.setText(textICAO);
         } else {
             Toast.makeText(this, "Nothing to refresh.", Toast.LENGTH_SHORT).show();
-            swipeRefreshLayout.setRefreshing(false);
+            stopRefreshing();
         }
     }
 
@@ -232,12 +252,13 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.history:
                 Intent intentNew = new Intent(this, TabbedActivity.class);
-                startActivity(intentNew);
+                startActivityForResult(intentNew, 1);
                 return true;
             case R.id.set_bookmark:
                 if (textICAO.length() == 4) {
                     if (!savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO)) {
-                        savedPreference.addSaved(getApplicationContext(), PrefsName.FAVORITE, new Airport(textICAO));
+                        savedPreference.addSaved(getBaseContext(), PrefsName.FAVORITE,
+                                new Airport(textICAO, textViewConditions.getText().toString().substring(textViewConditions.getText().toString().indexOf("(") + 1, textViewConditions.getText().toString().indexOf(")"))));
                         Toast.makeText(this, getString(R.string.add_bookmark), Toast.LENGTH_SHORT).show();
                     }
                     invalidateOptionsMenu();
@@ -312,5 +333,14 @@ public class MainActivity extends Activity {
         AlertDialog alert = builder.create();
         alert.show();
         return true;
+    }
+
+    public void stopRefreshing() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 }

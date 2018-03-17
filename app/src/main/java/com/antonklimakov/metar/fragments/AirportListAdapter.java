@@ -53,14 +53,17 @@ public class AirportListAdapter extends ArrayAdapter<Airport> {
             convertView = inflater.inflate(R.layout.airport_list_item, null);
             holder = new ViewHolder();
             holder.airportIcaoTxt = convertView.findViewById(R.id.txt_airport_icao);
+            holder.airportDescriptionTxt = convertView.findViewById(R.id.txt_airport_description);
             holder.favoriteImg = convertView.findViewById(R.id.imgbtn_favorite);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
         Airport airport = getItem(position);
         holder.airportIcaoTxt.setText(airport.getIcao());
+        holder.airportDescriptionTxt.setText(airport.getDescription());
 
         /*If a airport exists in shared preferences then set heart_red drawable and set a tag*/
         if (checkFavoriteItem(airport)) {
@@ -112,6 +115,7 @@ public class AirportListAdapter extends ArrayAdapter<Airport> {
 
     private class ViewHolder {
         TextView airportIcaoTxt;
+        TextView airportDescriptionTxt;
         ImageView favoriteImg;
     }
 }

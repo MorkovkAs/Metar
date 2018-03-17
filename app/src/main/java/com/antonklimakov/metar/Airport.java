@@ -4,12 +4,15 @@ public class Airport {
 
     private String icao;
 
+    private String description;
+
     public Airport() {
         super();
     }
 
-    public Airport(String icao) {
+    public Airport(String icao, String description) {
         this.icao = icao.toUpperCase();
+        this.description = description;
     }
 
     public String getIcao() {
@@ -18,6 +21,14 @@ public class Airport {
 
     public void setIcao(String icao) {
         this.icao = icao;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -39,6 +50,7 @@ public class Airport {
     public String toString() {
         return "Airport{" +
                 "icao='" + icao + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

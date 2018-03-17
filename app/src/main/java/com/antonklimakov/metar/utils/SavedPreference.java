@@ -20,7 +20,10 @@ public class SavedPreference {
     }
 
     public void addSaved(Context context, PrefsName prefsName, Airport item) {
-        item = item;
+        if (item == null || item.getIcao() == null || item.getIcao().equals("")) {
+            return;
+        }
+
         List<Airport> items = getItems(context, prefsName);
         if (items == null) {
             items = new ArrayList<>();
@@ -29,16 +32,11 @@ public class SavedPreference {
         saveItems(context, prefsName, items);
     }
 
-    public boolean isItemSaved(Context context, PrefsName prefsName, Airport item) {
-        List<Airport> items = getItems(context, prefsName);
-        return items != null && items.contains(item);
-    }
-
     public boolean isItemSaved(Context context, PrefsName prefsName, String airportIcao) {
         List<Airport> items = getItems(context, prefsName);
         if (items != null) {
             for (Airport airport : items) {
-                if (airport.getIcao().equalsIgnoreCase(airportIcao)) {
+                if (airport.getIcao() != null && airport.getIcao().equalsIgnoreCase(airportIcao)) {
                     return true;
                 }
             }
@@ -59,7 +57,7 @@ public class SavedPreference {
         List<Airport> items = getItems(context, prefsName);
         if (items != null) {
             for (Airport airport : items) {
-                if (airport.getIcao().equalsIgnoreCase(airportIcao)) {
+                if (airport.getIcao()!= null && airport.getIcao().equalsIgnoreCase(airportIcao)) {
                     items.remove(airport);
                     break;
                 }
@@ -76,7 +74,7 @@ public class SavedPreference {
         }
     }
 
-    public void saveItems(Context context, PrefsName prefsName, List<Airport> items) {
+    private void saveItems(Context context, PrefsName prefsName, List<Airport> items) {
         SharedPreferences preference;
         preference = context.getSharedPreferences(APP_PREFS_NAME, Context.MODE_PRIVATE);
 
@@ -89,7 +87,7 @@ public class SavedPreference {
 
     public List<Airport> getItems(Context context, PrefsName prefsName) {
         SharedPreferences preference;
-        List<Airport> items = null;
+        List<Airport> items = new ArrayList<>();
 
         preference = context.getSharedPreferences(APP_PREFS_NAME, Context.MODE_PRIVATE);
 

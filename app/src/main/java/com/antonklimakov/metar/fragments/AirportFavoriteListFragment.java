@@ -2,6 +2,7 @@ package com.antonklimakov.metar.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,11 @@ public class AirportFavoriteListFragment extends Fragment implements AdapterView
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Airport airport = (Airport) parent.getItemAtPosition(position);
-        Toast.makeText(activity, airport.toString(), Toast.LENGTH_LONG).show();
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("icao", airport.getIcao());
+        activity.setResult(Activity.RESULT_OK, returnIntent);
+        activity.finish();
     }
 
     @Override
@@ -62,7 +67,7 @@ public class AirportFavoriteListFragment extends Fragment implements AdapterView
         ImageView button = view.findViewById(R.id.imgbtn_favorite);
 
         String tag = button.getTag().toString();
-        if (tag.equalsIgnoreCase("red")) {
+        if (tag != null && tag.equalsIgnoreCase("red")) {
             sharedPreference.removeSaved(activity, PrefsName.FAVORITE, airports.get(position));
             button.setTag("grey");
             button.setImageResource(R.drawable.ic_bookmark_border_white_24dp);

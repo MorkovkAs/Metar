@@ -25,12 +25,12 @@ public class TabbedActivity extends Activity implements ActionBar.TabListener {
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         ActionBar.Tab tab = bar.newTab();
-        tab.setText("History");
+        tab.setText("Favorite");
         tab.setTabListener(this);
         bar.addTab(tab);
 
         tab = bar.newTab();
-        tab.setText("Favorite");
+        tab.setText("History");
         tab.setTabListener(this);
         bar.addTab(tab);
 
