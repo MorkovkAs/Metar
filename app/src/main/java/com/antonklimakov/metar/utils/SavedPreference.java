@@ -28,7 +28,7 @@ public class SavedPreference {
         if (items == null) {
             items = new ArrayList<>();
         }
-        items.add(item);
+        items.add(0, item);
         saveItems(context, prefsName, items);
     }
 

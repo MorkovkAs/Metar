@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Metar</string>
+    <string name="app_name" translatable="false">Metar</string>
 
     <string name="refresh">Refresh</string>
     <string name="set_bookmark">Add to favorites</string>
@@ -23,5 +23,22 @@
     <string name="dialog_email_title">Do you want to send an email to the developer?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="mail">Choose an Email client:</string>
+    <string name="choose_mail_client">Choose an Email client:</string>
+
+    <string name="icao_code">ICAO code</string>
+    <string name="metar_text">METAR text:</string>
+    <string name="conditions_at">Conditions at:</string>
+    <string name="temperature">Temperature:</string>
+    <string name="dewpoint">Dewpoint:</string>
+    <string name="pressure">Pressure:</string>
+    <string name="winds">Winds:</string>
+    <string name="visibility">Visibility:</string>
+    <string name="ceiling">Ceiling:</string>
+    <string name="clouds">Clouds:</string>
+    <string name="weather">Weather:</string>
+
+    <string name="failed_to_update">Failed to update</string>
+    <string name="nothing_to_refresh">Nothing to refresh.</string>
+    <string name="metar_is_refreshing">is refreshing</string>
+    <string name="nothing_to_add_to_favorites">Nothing to add to Favorites</string>
 </resources>

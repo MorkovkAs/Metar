@@ -3,9 +3,15 @@
     <color name="text_color">#ffffff</color>
 
     <color name="green">#34ff5d</color>
+    <color name="green_hint">#6aff88</color>
     <color name="blue">#33b5e5</color>
 
     <color name="transparent">#00000000</color>
     <color name="airport_list_item_bg">#5b5959</color>
     <color name="view_divider_color">#898989</color>
+
+    <color name="action_bar_background_color">#343434</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ba1637</color>
+    <color name="colorAccent">#d4d70c</color>
 </resources>

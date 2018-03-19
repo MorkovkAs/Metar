@@ -22,17 +22,21 @@ public class TabbedActivity extends Activity implements ActionBar.TabListener {
         setContentView(R.layout.activity_tabbed);
         ActionBar bar = getActionBar();
 
-        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        if (bar != null) {
+            bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ActionBar.Tab tab = bar.newTab();
-        tab.setText("Favorite");
-        tab.setTabListener(this);
-        bar.addTab(tab);
+            ActionBar.Tab tab = bar.newTab();
+            tab.setText(getString(R.string.favorite));
+            tab.setTabListener(this);
+            tab.setTag("Favorite");
+            bar.addTab(tab);
 
-        tab = bar.newTab();
-        tab.setText("History");
-        tab.setTabListener(this);
-        bar.addTab(tab);
+            tab = bar.newTab();
+            tab.setText(getString(R.string.history));
+            tab.setTabListener(this);
+            tab.setTag("History");
+            bar.addTab(tab);
+        }
 
     }
 
@@ -42,7 +46,7 @@ public class TabbedActivity extends Activity implements ActionBar.TabListener {
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        switch (tab.getText().toString()) {
+        switch (tab.getTag().toString()) {
             case "History":
                 airportListFragment = new AirportListFragment();
                 switchContent(airportListFragment, ft, AirportListFragment.ARG_ITEM_ID);

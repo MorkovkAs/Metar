@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -56,13 +55,6 @@ public class MainActivity extends Activity {
         savedPreference = new SavedPreference();
 
         swipeRefreshLayout = findViewById(R.id.swipe);
-        Resources resources = getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            swipeRefreshLayout.setProgressViewOffset(true, 0, resources.getDimensionPixelSize(resourceId));
-        } else {
-            swipeRefreshLayout.setProgressViewOffset(false, 0, 50);
-        }
         swipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.green, R.color.view_divider_color);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -92,9 +84,6 @@ public class MainActivity extends Activity {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //if (s.length() > 0) {
-                //    length = s.length();
-                //}
             }
 
             @Override
@@ -199,7 +188,7 @@ public class MainActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), "Failed to update", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.failed_to_update, Toast.LENGTH_SHORT).show();
                 }
             });
             stopRefreshing();
@@ -219,10 +208,10 @@ public class MainActivity extends Activity {
 
     private void refreshMetar() {
         if (textICAO.length() == 4) {
-            Toast.makeText(this, "" + textICAO + " is refreshing", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + textICAO + getString(R.string.metar_is_refreshing), Toast.LENGTH_SHORT).show();
             editTextICAO.setText(textICAO);
         } else {
-            Toast.makeText(this, "Nothing to refresh.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.nothing_to_refresh, Toast.LENGTH_SHORT).show();
             stopRefreshing();
         }
     }
@@ -263,7 +252,7 @@ public class MainActivity extends Activity {
                     }
                     invalidateOptionsMenu();
                 } else {
-                    Toast.makeText(this, "Nothing to add to Favorites.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.nothing_to_add_to_favorites, Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.unset_bookmark:
@@ -326,7 +315,7 @@ public class MainActivity extends Activity {
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.putExtra(Intent.EXTRA_EMAIL, new String[]{"anton.android.apps@gmail.com"});
                 email.setType("message/rfc822");
-                startActivity(Intent.createChooser(email, "Choose an Email client:"));
+                startActivity(Intent.createChooser(email, getString(R.string.choose_mail_client)));
             }
         });
 
