@@ -21,7 +21,8 @@
             android:layout_alignParentTop="true"
             android:padding="0sp"
             android:scaleType="centerCrop"
-            android:src="@drawable/man" />
+            android:src="@drawable/man"
+            tools:ignore="ContentDescription" />
 
         <EditText
             android:id="@+id/editTextICAO"

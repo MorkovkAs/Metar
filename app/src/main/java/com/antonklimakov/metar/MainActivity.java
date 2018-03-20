@@ -278,7 +278,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    public boolean rateTheApp(Context context) {
+    public void rateTheApp(Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.dialog_about_title);
 
@@ -321,7 +321,6 @@ public class MainActivity extends Activity {
 
         AlertDialog alert = builder.create();
         alert.show();
-        return true;
     }
 
     public void stopRefreshing() {

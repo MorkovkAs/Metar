@@ -1,17 +1,4 @@
 <resources>
 
-    <!-- the theme applied to the application or activity -->
-    <style name="MyTheme" parent="@android:style/Theme.Holo">
-        <!--<item name="android:actionBarStyle">@style/ActionBar</item>-->
-    </style>
-
-    <!--<style name="ActionBar" parent="android:Widget.Holo.ActionBar">
-        <item name="android:background">@color/action_bar_background_color</item>
-        <item name="android:actionBarTabStyle">@style/MyActionBarTabs</item>
-    </style>
-
-    <style name="MyActionBarTabs" parent="android:style/Widget.Holo.ActionBar.TabView">
-        <item name="android:background">@color/green</item>
-        <item name="android:actionBarDivider">@color/blue</item>
-    </style>-->
+    <style name="AppTheme" parent="@android:style/Theme.Holo" />
 </resources>
