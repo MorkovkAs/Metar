@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
         savedPreference = new SavedPreference();
 
         swipeRefreshLayout = findViewById(R.id.swipe);
-        swipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.green, R.color.view_divider_color);
+        swipeRefreshLayout.setColorSchemeResources(R.color.blue_halo, R.color.view_divider_color, R.color.icao);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -108,6 +108,12 @@ public class MainActivity extends Activity {
                 refreshMetar();
             }
         }
+    }
+
+    @Override
+    protected void onResume () {
+        super.onResume();
+        invalidateOptionsMenu();
     }
 
     protected void onSaveInstanceState(Bundle outState) {
@@ -208,7 +214,7 @@ public class MainActivity extends Activity {
 
     private void refreshMetar() {
         if (textICAO.length() == 4) {
-            Toast.makeText(this, "" + textICAO + getString(R.string.metar_is_refreshing), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + textICAO + " " + getString(R.string.metar_is_refreshing), Toast.LENGTH_SHORT).show();
             editTextICAO.setText(textICAO);
         } else {
             Toast.makeText(this, R.string.nothing_to_refresh, Toast.LENGTH_SHORT).show();
@@ -244,7 +250,7 @@ public class MainActivity extends Activity {
                 startActivityForResult(intentNew, 1);
                 return true;
             case R.id.set_bookmark:
-                if (textICAO.length() == 4) {
+                if (textICAO.length() == 4 && textViewConditions.getText() != null && !textViewConditions.getText().equals("")) {
                     if (!savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO)) {
                         savedPreference.addSaved(getBaseContext(), PrefsName.FAVORITE,
                                 new Airport(textICAO, textViewConditions.getText().toString().substring(textViewConditions.getText().toString().indexOf("(") + 1, textViewConditions.getText().toString().indexOf(")"))));

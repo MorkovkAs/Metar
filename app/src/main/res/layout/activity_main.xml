@@ -37,9 +37,10 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:textColor="@color/green"
-            android:textColorHint="@color/green_hint"
-            android:layout_alignParentEnd="true" />
+            android:textColor="@color/icao"
+            android:textColorHint="@color/icao_hint"
+            android:layout_alignParentEnd="true"
+            android:textStyle="bold"/>
 
         <TableLayout
             android:id="@+id/tableLayout"

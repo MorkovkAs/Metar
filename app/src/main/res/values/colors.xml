@@ -4,6 +4,11 @@
 
     <color name="green">#34ff5d</color>
     <color name="green_hint">#6aff88</color>
+
+    <color name="icao">#b0c487f2</color>
+    <color name="icao_hint">#b0c487f2</color>
+    <color name="blue_halo">#33b5e5</color>
+
     <color name="blue">#3f51b5</color>
 
     <color name="transparent">#00000000</color>
