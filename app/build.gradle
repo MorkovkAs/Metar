@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('E:/AndoidApps/androidsign')
-            storePassword '-----'
-            keyAlias "----"
-            keyPassword "-----"
+            storeFile file('E:/ak95/My/androidsign')
+            storePassword 'lloret95'
+            keyAlias "sign"
+            keyPassword "lloret95"
         }
     }
 
@@ -19,13 +19,19 @@ android {
         targetSdkVersion 27
         versionCode 7
         versionName "1.1"
+        resConfigs "en", "ru"
     }
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            shrinkResources true
             signingConfig signingConfigs.release
         }
+    }
+
+    packagingOptions{
+        exclude 'AndroidManifest.xml'
     }
 }
 
