@@ -5,9 +5,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -44,6 +46,7 @@ public class MainActivity extends Activity {
     String textICAO = "";
 
     SavedPreference savedPreference;
+    boolean isJustToCaps = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,30 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
         savedPreference = new SavedPreference();
+
+        //  Declare a new thread to do a preference check
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String firstStartOfVersionName = "firstStart-v" + BuildConfig.VERSION_NAME;
+                SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                boolean isFirstStart = getPrefs.getBoolean(firstStartOfVersionName, true);
+
+                if (isFirstStart) {
+                    final Intent i = new Intent(MainActivity.this, IntroActivity.class);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(i);
+                        }
+                    });
+                    SharedPreferences.Editor e = getPrefs.edit();
+                    e.putBoolean(firstStartOfVersionName, false);
+                    e.apply();
+                }
+            }
+        });
+        t.start();
 
         swipeRefreshLayout = findViewById(R.id.swipe);
         swipeRefreshLayout.setColorSchemeResources(R.color.blue_halo, R.color.view_divider_color, R.color.icao);
@@ -89,11 +116,18 @@ public class MainActivity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 4) {
-                    if (!s.toString().equalsIgnoreCase(textICAO)) {
-                        textICAO = s.toString().toUpperCase();
+                    if (!isJustToCaps)  {
+                        isJustToCaps = true;
+                        if (!s.toString().equalsIgnoreCase(textICAO)) {
+                            textICAO = s.toString().toUpperCase();
+                        }
+                        writeMetar(textICAO);
+                        invalidateOptionsMenu();
+                        editTextICAO.setText(textICAO);
+                        editTextICAO.setSelection(4);
+                    } else {
+                        isJustToCaps = false;
                     }
-                    writeMetar(textICAO);
-                    invalidateOptionsMenu();
                 }
             }
         });
@@ -111,7 +145,7 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onResume () {
+    protected void onResume() {
         super.onResume();
         invalidateOptionsMenu();
     }

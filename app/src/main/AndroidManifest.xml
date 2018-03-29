@@ -26,5 +26,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.antonklimakov.metar.MainActivity" />
         </activity>
+
+        <activity android:name=".IntroActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat"/>
     </application>
 </manifest>
