@@ -1,14 +1,44 @@
 <resources>
-    <string name="app_name">Metar</string>
+    <string name="app_name" translatable="false">Metar</string>
 
     <string name="refresh">Refresh</string>
-    <string name="action_settings">Settings</string>
+    <string name="set_bookmark">Add to favorites</string>
+    <string name="unset_bookmark">Remove from favorites</string>
+    <string name="history">History</string>
+    <string name="favorite">Favorite</string>
     <string name="rate">Rate the app</string>
+    <string name="more_apps">More apps</string>
     <string name="exit">Exit</string>
+    <string name="remove_history">Remove all</string>
+    <string name="removed_history">Removed from History</string>
+
+    <string name="add_bookmark">Added to Favorites</string>
+    <string name="remove_bookmark">Removed from Favorites</string>
+    <string name="no_favorites_items">No Favorites</string>
+    <string name="no_favorites_msg">Long press on item to add to favorites</string>
+    <string name="favorites_remove_msg">Long press on item to remove from favorites</string>
 
     <string name="dialog_about_title">Do you like the app?</string>
     <string name="dialog_rate_title">Do you want to rate the app?</string>
+    <string name="dialog_email_title">Do you want to send an email to the developer?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="mail">Choose an Email client:</string>
+    <string name="choose_mail_client">Choose an Email client:</string>
+
+    <string name="icao_code">ICAO code</string>
+    <string name="metar_text">METAR text:</string>
+    <string name="conditions_at">Conditions at:</string>
+    <string name="temperature">Temperature:</string>
+    <string name="dewpoint">Dewpoint:</string>
+    <string name="pressure">Pressure:</string>
+    <string name="winds">Winds:</string>
+    <string name="visibility">Visibility:</string>
+    <string name="ceiling">Ceiling:</string>
+    <string name="clouds">Clouds:</string>
+    <string name="weather">Weather:</string>
+
+    <string name="failed_to_update">Failed to update</string>
+    <string name="nothing_to_refresh">Nothing to refresh.</string>
+    <string name="metar_is_refreshing">is refreshing</string>
+    <string name="nothing_to_add_to_favorites">Nothing to add to Favorites</string>
 </resources>

@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
     String textICAO = "";
 
     SavedPreference savedPreference;
+    boolean isJustToCaps = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +116,18 @@ public class MainActivity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 4) {
-                    if (!s.toString().equalsIgnoreCase(textICAO)) {
-                        textICAO = s.toString().toUpperCase();
+                    if (!isJustToCaps)  {
+                        isJustToCaps = true;
+                        if (!s.toString().equalsIgnoreCase(textICAO)) {
+                            textICAO = s.toString().toUpperCase();
+                        }
+                        writeMetar(textICAO);
+                        invalidateOptionsMenu();
+                        editTextICAO.setText(textICAO);
+                        editTextICAO.setSelection(4);
+                    } else {
+                        isJustToCaps = false;
                     }
-                    writeMetar(textICAO);
-                    invalidateOptionsMenu();
                 }
             }
         });

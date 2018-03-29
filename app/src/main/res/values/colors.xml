@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="text_color">#ffffff</color>
-    <color name="action_bar_color">#55343434</color>
+
+    <color name="green">#34ff5d</color>
+    <color name="green_hint">#6aff88</color>
+
+    <color name="icao">#b0c487f2</color>
+    <color name="icao_hint">#b0c487f2</color>
+    <color name="blue_halo">#33b5e5</color>
+
+    <color name="blue">#3f51b5</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="airport_list_item_bg">#5b5959</color>
+    <color name="view_divider_color">#898989</color>
+
+    <color name="action_bar_background_color">#343434</color>
 </resources>

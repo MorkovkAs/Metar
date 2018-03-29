@@ -1,9 +1,4 @@
 <resources>
 
-    <!-- the theme applied to the application or activity -->
-    <style name="MyActionBarTheme"
-        parent="@android:style/Theme.Holo">
-        <item name="android:windowActionBarOverlay">true</item>
-        <!-- Нужно не забыть, что поле ICAO опущено вниз. По идее на высоту ActionBar. Portrait	48 dp, Landscape 40 dp, Tablet 56 dp - размеры ActionBar.-->
-    </style>
+    <style name="AppTheme" parent="@android:style/Theme.Holo" />
 </resources>

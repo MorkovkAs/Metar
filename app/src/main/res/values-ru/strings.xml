@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="refresh">Обновить</string>
+    <string name="set_bookmark">Добавить в избранное</string>
+    <string name="unset_bookmark">Удалить из избранного</string>
+    <string name="history">История</string>
+    <string name="favorite">Избранное</string>
+    <string name="rate">Оценить приложение</string>
+    <string name="more_apps">Приложения от разработчика</string>
+    <string name="exit">Выйти</string>
+    <string name="remove_history">Очистить</string>
+    <string name="removed_history">История очищена</string>
+    <string name="dialog_about_title">Вам понравилось приложение?</string>
+    <string name="dialog_rate_title">Вы хотите поставить оценку?</string>
+    <string name="dialog_email_title">Вы хотите написать письмо разработчику?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="choose_mail_client">Выберите приложение для отправки письма</string>
+
+    <string name="no_favorites_msg">Долгое нажатие, чтобы добавить в избранное</string>
+    <string name="favorites_remove_msg">Долгое нажатие, чтобы удалить из избранного</string>
+    <string name="no_favorites_items">Нет избранных</string>
+    <string name="add_bookmark">Добавлено в избранное</string>
+    <string name="remove_bookmark">Удалено из избранного</string>
+
+    <string name="metar_text">Сводка Metar:</string>
+    <string name="temperature">Температура:</string>
+    <string name="pressure">Давление:</string>
+    <string name="winds">Ветер:</string>
+    <string name="visibility">Видимость:</string>
+    <string name="clouds">Облачность:</string>
+    <string name="weather">Особые явления:</string>
+    <string name="conditions_at">Место и время:</string>
+    <string name="dewpoint">Точка росы:</string>
+    <string name="icao_code">ICAO код:</string>
+    <string name="ceiling">Благоприятность:</string>
+    <string name="failed_to_update">Произошла ошибка при обновлении</string>
+    <string name="nothing_to_refresh">Нечего обновлять</string>
+    <string name="metar_is_refreshing">Метар обновляется</string>
+    <string name="nothing_to_add_to_favorites">Нечего добавлять в избранное</string>
+
+
+</resources>
