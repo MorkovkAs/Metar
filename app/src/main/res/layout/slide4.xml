@@ -16,7 +16,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="You are all set. Enjoy Metar"
+        android:text="@string/you_are_all_set_enjoy_metar"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
@@ -47,7 +47,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="GET STARTED"
+        android:text="@string/get_started"
         android:textColor="#ffffff"
         android:textSize="15sp" />
 

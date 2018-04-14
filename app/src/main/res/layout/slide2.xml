@@ -16,7 +16,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="Favorites"
+        android:text="@string/favorite"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
@@ -68,7 +68,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Save favorite airports for easy access"
+        android:text="@string/save_favorite_airports_for_easy_access"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 

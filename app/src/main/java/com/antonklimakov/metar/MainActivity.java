@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
                 SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 boolean isFirstStart = getPrefs.getBoolean(firstStartOfVersionName, true);
 
-                if (true || isFirstStart) {
+                if (isFirstStart) {
                     final Intent i = new Intent(MainActivity.this, IntroActivity.class);
                     runOnUiThread(new Runnable() {
                         @Override

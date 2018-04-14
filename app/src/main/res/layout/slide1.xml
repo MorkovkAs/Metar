@@ -16,7 +16,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="Welcome to Metar"
+        android:text="@string/welcome_to_metar"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
@@ -45,7 +45,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Metar gives detailed information of weather in the selected Airport by ICAO code"
+        android:text="@string/metar_gives_detailed_information_of_weather_in_the_selected_airport_by_icao_code"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 

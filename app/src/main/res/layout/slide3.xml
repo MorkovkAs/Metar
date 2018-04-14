@@ -16,7 +16,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="Favorites"
+        android:text="@string/favorite"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
@@ -45,7 +45,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Click once to search"
+        android:text="@string/click_once_to_search"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 
@@ -57,7 +57,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Click long to add or remove from favorites"
+        android:text="@string/click_long_to_add_or_remove_from_favorites"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 
