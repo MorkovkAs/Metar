@@ -22,20 +22,29 @@ public class TabbedActivity extends Activity implements ActionBar.TabListener {
         setContentView(R.layout.activity_tabbed);
         ActionBar bar = getActionBar();
 
+        Bundle b = getIntent().getExtras();
+        boolean fav = false;
+        if (b != null) {
+            fav = b.getBoolean("fav");
+        }
         if (bar != null) {
             bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
             ActionBar.Tab tab = bar.newTab();
+            tab.setText(getString(R.string.history));
+            tab.setTabListener(this);
+            tab.setTag("History");
+            bar.addTab(tab);
+
+            tab = bar.newTab();
             tab.setText(getString(R.string.favorite));
             tab.setTabListener(this);
             tab.setTag("Favorite");
             bar.addTab(tab);
 
-            tab = bar.newTab();
-            tab.setText(getString(R.string.history));
-            tab.setTabListener(this);
-            tab.setTag("History");
-            bar.addTab(tab);
+            if (fav) {
+                bar.setSelectedNavigationItem(1);
+            }
         }
 
     }

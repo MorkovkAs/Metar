@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_weight="10"
     android:background="@color/slides_background"
     android:orientation="vertical">
@@ -31,33 +30,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_bookmark_border_white_24dp"
+            android:background="@drawable/ic_bookmark_border_white_24dp"
             android:gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:scaleX="2"
-            android:scaleY="2"/>
+            android:layout_marginRight="10dp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@android:drawable/arrow_up_float"
-            android:gravity="center_horizontal|center_vertical"
-            android:rotation="90"
-            android:scaleX="1.5"
-            android:scaleY="1.5"/>
+            android:background="@android:drawable/arrow_up_float"
+            android:gravity="center_horizontal|center_vertical"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_bookmark_white_24dp"
+            android:background="@drawable/ic_bookmark_white_24dp"
             android:gravity="center_horizontal|center_vertical"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:scaleX="2"
-            android:scaleY="2"/>
+            android:layout_marginRight="10dp" />
     </LinearLayout>
 
     <TextView

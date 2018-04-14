@@ -275,12 +275,22 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intentNew;
         switch (item.getItemId()) {
             case R.id.refresh:
                 refreshMetar();
                 return true;
+            case R.id.favorites:
+                intentNew = new Intent(this, TabbedActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("fav", true);
+                intentNew.putExtras(bundle);
+
+                startActivityForResult(intentNew, 1);
+                return true;
             case R.id.history:
-                Intent intentNew = new Intent(this, TabbedActivity.class);
+                intentNew = new Intent(this, TabbedActivity.class);
                 startActivityForResult(intentNew, 1);
                 return true;
             case R.id.set_bookmark:
