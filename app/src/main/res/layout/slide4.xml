@@ -11,12 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="Favorites"
+        android:text="You are all set. Enjoy Metar"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
@@ -31,7 +31,9 @@
             android:id="@+id/fav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/fav"
+            app:srcCompat="@drawable/success"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"/>
 
@@ -41,25 +43,13 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Click once to search"
+        android:text="GET STARTED"
         android:textColor="#ffffff"
-        android:textSize="16sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:paddingLeft="64dp"
-        android:paddingRight="64dp"
-        android:text="Click long to add or remove from favorites"
-        android:textColor="#ffffff"
-        android:textSize="16sp" />
+        android:textSize="15sp" />
 
     <TextView
         android:layout_width="fill_parent"

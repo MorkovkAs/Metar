@@ -15,11 +15,11 @@ public class IntroActivity extends AppIntro {
 
         addSlide(SampleSlide.newInstance(R.layout.slide1));
         addSlide(SampleSlide.newInstance(R.layout.slide2));
+        addSlide(SampleSlide.newInstance(R.layout.slide3));
+        addSlide(SampleSlide.newInstance(R.layout.slide4));
 
         // OPTIONAL METHODS
-        // Override bar/separator color.
-        setBarColor(Color.parseColor("#3F51B5"));
-        setSeparatorColor(Color.parseColor("#2196F3"));
+        setBarColor(getResources().getColor(R.color.primary_dark));
 
         // Hide Skip/Done button.
         showSkipButton(false);
