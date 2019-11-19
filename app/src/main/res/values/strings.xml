@@ -47,6 +47,6 @@
     <string name="save_favorite_airports_for_easy_access">Save favorite airports for easy access</string>
     <string name="click_once_to_search">Click once to search</string>
     <string name="click_long_to_add_or_remove_from_favorites">Click long to add or remove from favorites</string>
-    <string name="you_are_all_set_enjoy_metar">You are all set. Enjoy Metar</string>
-    <string name="get_started">GET STARTED</string>
+    <string name="you_are_all_set">You are all set</string>
+    <string name="enjoy_metar">Enjoy Metar</string>
 </resources>

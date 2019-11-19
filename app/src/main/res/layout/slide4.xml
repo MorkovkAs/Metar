@@ -16,7 +16,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="@string/you_are_all_set_enjoy_metar"
+        android:text="@string/you_are_all_set"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
@@ -47,9 +47,9 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="@string/get_started"
+        android:text="@string/enjoy_metar"
         android:textColor="#ffffff"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="fill_parent"

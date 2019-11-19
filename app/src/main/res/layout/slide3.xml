@@ -16,7 +16,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="@string/favorite"
+        android:text="@string/history"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
@@ -28,13 +28,22 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/history_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_schedule_white_24dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:scaleX="2"
+            android:scaleY="2"/>
+
+        <ImageView
             android:id="@+id/fav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/fav"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"/>
-
     </LinearLayout>
 
     <TextView

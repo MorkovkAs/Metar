@@ -39,13 +39,13 @@
     <string name="metar_is_refreshing">Метар обновляется</string>
     <string name="nothing_to_add_to_favorites">Нечего добавлять в избранное</string>
 
+    <string name="welcome_to_metar" translatable="false">Добро пожаловать в Metar</string>
     <string name="metar_gives_detailed_information_of_weather_in_the_selected_airport_by_icao_code">Метар показывает текущую погоду в аэропорту по коду ICAO</string>
     <string name="save_favorite_airports_for_easy_access">Сохраняйте в избранное для быстрого доступа</string>
     <string name="click_once_to_search">Нажатие для поиска</string>
     <string name="click_long_to_add_or_remove_from_favorites">Долгое нажатие для добавления или удаления в избранном</string>
-    <string name="get_started">НАЧАТь</string>
-    <string name="you_are_all_set_enjoy_metar">Все готово. Приятного пользования!</string>
-    <string name="welcome_to_metar" translatable="false">Добро пожаловать в Metar</string>
+    <string name="you_are_all_set">Всё готово</string>
+    <string name="enjoy_metar">Приятного пользования!</string>
 
 
 </resources>
