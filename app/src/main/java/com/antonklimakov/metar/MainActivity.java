@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -19,6 +18,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.antonklimakov.metar.utils.PrefsName;
 import com.antonklimakov.metar.utils.SavedPreference;
@@ -40,7 +41,6 @@ public class MainActivity extends Activity {
     TextView textViewVisibility;
     TextView textViewCeiling;
     TextView textViewClouds;
-    TextView textViewWeather;
 
     EditText editTextICAO;
     String textICAO = "";
@@ -100,7 +100,6 @@ public class MainActivity extends Activity {
         textViewVisibility = findViewById(R.id.textViewVisibility);
         textViewCeiling = findViewById(R.id.textViewCeiling);
         textViewClouds = findViewById(R.id.textViewClouds);
-        textViewWeather = findViewById(R.id.textViewWeather);
 
         editTextICAO = findViewById(R.id.editTextICAO);
         editTextICAO.addTextChangedListener(new TextWatcher() {
@@ -116,7 +115,7 @@ public class MainActivity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 4) {
-                    if (!isJustToCaps)  {
+                    if (!isJustToCaps) {
                         isJustToCaps = true;
                         if (!s.toString().equalsIgnoreCase(textICAO)) {
                             textICAO = s.toString().toUpperCase();
@@ -161,7 +160,6 @@ public class MainActivity extends Activity {
         outState.putString("textViewVisibility", textViewVisibility.getText().toString());
         outState.putString("textViewCeiling", textViewCeiling.getText().toString());
         outState.putString("textViewClouds", textViewClouds.getText().toString());
-        outState.putString("textViewWeather", textViewWeather.getText().toString());
 
         outState.putString("editTextICAO", editTextICAO.getText().toString());
         outState.putString("ICAO", textICAO);
@@ -178,7 +176,6 @@ public class MainActivity extends Activity {
         textViewVisibility.setText(savedInstanceState.getString("textViewVisibility"));
         textViewCeiling.setText(savedInstanceState.getString("textViewCeiling"));
         textViewClouds.setText(savedInstanceState.getString("textViewClouds"));
-        textViewWeather.setText(savedInstanceState.getString("textViewWeather"));
 
         editTextICAO.setText(savedInstanceState.getString("editTextICAO"));
         textICAO = savedInstanceState.getString("ICAO");
@@ -188,19 +185,19 @@ public class MainActivity extends Activity {
     private void getMetar(String ICAO) {
         Document doc;
         try {
-            String link = "http://aviationweather.gov/adds/metars/?chk_metars=ON&hoursStr=most+recent+only&station_ids=" + ICAO + "&submitmet=Get+info&std_trans=translated";
+            String link = "https://aviationweather.gov/metar/data?ids=" + ICAO + "&format=decoded&date=&hours=0";
+            String link2 = "http://aviationweather.gov/adds/metars/?chk_metars=ON&hoursStr=most+recent+only&station_ids=" + ICAO + "&submitmet=Get+info&std_trans=translated";
             doc = Jsoup.connect(link).timeout(30000).get();
 
-            final String metar = doc.select("body > table > tbody > tr:nth-child(3) > td:nth-child(2) > strong").text();
-            final String conditions = doc.select("body > table > tbody > tr:nth-child(4) > td:nth-child(2)").text();
-            final String temperature = doc.select("body > table > tbody > tr:nth-child(5) > td:nth-child(2)").text();
-            final String dewpoint = doc.select("body > table > tbody > tr:nth-child(6) > td:nth-child(2)").text();
-            final String pressure = doc.select("body > table > tbody > tr:nth-child(7) > td:nth-child(2)").text();
-            final String winds = doc.select("body > table > tbody > tr:nth-child(8) > td:nth-child(2)").text();
-            final String visibility = doc.select("body > table > tbody > tr:nth-child(9) > td:nth-child(2)").text();
-            final String ceiling = doc.select("body > table > tbody > tr:nth-child(10) > td:nth-child(2)").text();
-            final String clouds = doc.select("body > table > tbody > tr:nth-child(11) > td:nth-child(2)").text();
-            final String weather = doc.select("body > table > tbody > tr:nth-child(12) > td:nth-child(2)").text();
+            final String metar = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(2) > td:nth-child(2)").text();
+            final String conditions = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(1) > td:nth-child(2)").text();
+            final String temperature = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(3) > td:nth-child(2)").text();
+            final String dewpoint = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(4) > td:nth-child(2)").text();
+            final String pressure = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(5) > td:nth-child(2)").text();
+            final String winds = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(6) > td:nth-child(2)").text();
+            final String visibility = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(7) > td:nth-child(2)").text();
+            final String ceiling = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(8) > td:nth-child(2)").text();
+            final String clouds = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(9) > td:nth-child(2)").text();
 
             if (metar != null && !metar.equals("")) {
                 savedPreference.addSaved(getBaseContext(), PrefsName.HISTORY, new Airport(textICAO, conditions.substring(conditions.indexOf("(") + 1, conditions.indexOf(")"))));
@@ -218,7 +215,6 @@ public class MainActivity extends Activity {
                     textViewVisibility.setText(visibility);
                     textViewCeiling.setText(ceiling);
                     textViewClouds.setText(clouds);
-                    textViewWeather.setText(weather);
                     stopRefreshing();
                 }
             });
