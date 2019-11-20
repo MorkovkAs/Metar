@@ -35,7 +35,6 @@
     <string name="visibility">Visibility:</string>
     <string name="ceiling">Ceiling:</string>
     <string name="clouds">Clouds:</string>
-    <string name="weather">Weather:</string>
 
     <string name="failed_to_update">Failed to update</string>
     <string name="nothing_to_refresh">Nothing to refresh.</string>

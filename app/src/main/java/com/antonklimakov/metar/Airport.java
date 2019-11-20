@@ -1,5 +1,7 @@
 package com.antonklimakov.metar;
 
+import java.util.Locale;
+
 public class Airport {
 
     private String icao;
@@ -11,7 +13,7 @@ public class Airport {
     }
 
     public Airport(String icao, String description) {
-        this.icao = icao.toUpperCase();
+        this.icao = icao.toUpperCase(Locale.US);
         this.description = description;
     }
 

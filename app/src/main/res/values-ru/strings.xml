@@ -29,7 +29,6 @@
     <string name="winds">Ветер:</string>
     <string name="visibility">Видимость:</string>
     <string name="clouds">Облачность:</string>
-    <string name="weather">Особые явления:</string>
     <string name="conditions_at">Место и время:</string>
     <string name="dewpoint">Точка росы:</string>
     <string name="icao_code">ICAO код:</string>
@@ -39,7 +38,7 @@
     <string name="metar_is_refreshing">Метар обновляется</string>
     <string name="nothing_to_add_to_favorites">Нечего добавлять в избранное</string>
 
-    <string name="welcome_to_metar" translatable="false">Добро пожаловать в Metar</string>
+    <string name="welcome_to_metar">Добро пожаловать в Metar</string>
     <string name="metar_gives_detailed_information_of_weather_in_the_selected_airport_by_icao_code">Метар показывает текущую погоду в аэропорту по коду ICAO</string>
     <string name="save_favorite_airports_for_easy_access">Сохраняйте в избранное для быстрого доступа</string>
     <string name="click_once_to_search">Нажатие для поиска</string>

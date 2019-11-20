@@ -29,6 +29,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends Activity {
@@ -124,7 +125,7 @@ public class MainActivity extends Activity {
                     if (!isJustToCaps) {
                         isJustToCaps = true;
                         if (!s.toString().equalsIgnoreCase(textICAO)) {
-                            textICAO = s.toString().toUpperCase();
+                            textICAO = s.toString().toUpperCase(Locale.US);
                         }
                         writeMetar(textICAO);
                         invalidateOptionsMenu();
