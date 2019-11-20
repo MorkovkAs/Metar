@@ -32,7 +32,7 @@ public class MainActivityTest {
         String icao = "UUUU";
         Map result = testActivity.getMetar(icao);
         assertNotNull(result);
-        assertEquals(result.size(), 8);
+        assertEquals(result.size(), 9);
         assertEquals(result.get("conditions"), icao);
     }
 
