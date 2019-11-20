@@ -1,15 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('C:/Users/Anton Klimakov/StudioProjects/androidsign')
-            storePassword 'lloret95'
-            keyAlias "sign"
-            keyPassword "lloret95"
-        }
-    }
-
     compileSdkVersion 29
     buildToolsVersion '29.0.2'
 
