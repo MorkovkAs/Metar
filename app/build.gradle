@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('E:/ak95/My/androidsign')
-            storePassword ''
+            storeFile file('C:/Users/Anton Klimakov/StudioProjects/androidsign')
+            storePassword 'lloret95'
             keyAlias "sign"
-            keyPassword ""
+            keyPassword "lloret95"
         }
     }
 
@@ -26,11 +26,11 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             shrinkResources true
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
         }
     }
 
-    packagingOptions{
+    packagingOptions {
         exclude 'AndroidManifest.xml'
     }
 }
@@ -40,4 +40,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'org.jsoup:jsoup:1.11.2'
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
+
+    testImplementation 'junit:junit:4.12'
 }

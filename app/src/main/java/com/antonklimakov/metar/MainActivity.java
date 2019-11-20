@@ -28,6 +28,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends Activity {
     SwipeRefreshLayout swipeRefreshLayout;
@@ -47,6 +49,10 @@ public class MainActivity extends Activity {
 
     SavedPreference savedPreference;
     boolean isJustToCaps = false;
+
+    protected static boolean isNullOrEmpty(String str) {
+        return str == null || str.equals("");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,43 +188,10 @@ public class MainActivity extends Activity {
         invalidateOptionsMenu();
     }
 
-    private void getMetar(String ICAO) {
-        Document doc;
+    private void setMetar(String ICAO) {
+        final Map<String, String> weatherValues;
         try {
-            String link = "https://aviationweather.gov/metar/data?ids=" + ICAO + "&format=decoded&date=&hours=0";
-            String link2 = "http://aviationweather.gov/adds/metars/?chk_metars=ON&hoursStr=most+recent+only&station_ids=" + ICAO + "&submitmet=Get+info&std_trans=translated";
-            doc = Jsoup.connect(link).timeout(30000).get();
-
-            final String metar = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(2) > td:nth-child(2)").text();
-            final String conditions = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(1) > td:nth-child(2)").text();
-            final String temperature = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(3) > td:nth-child(2)").text();
-            final String dewpoint = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(4) > td:nth-child(2)").text();
-            final String pressure = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(5) > td:nth-child(2)").text();
-            final String winds = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(6) > td:nth-child(2)").text();
-            final String visibility = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(7) > td:nth-child(2)").text();
-            final String ceiling = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(8) > td:nth-child(2)").text();
-            final String clouds = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(9) > td:nth-child(2)").text();
-
-            if (metar != null && !metar.equals("")) {
-                savedPreference.addSaved(getBaseContext(), PrefsName.HISTORY, new Airport(textICAO, conditions.substring(conditions.indexOf("(") + 1, conditions.indexOf(")"))));
-            }
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    textViewMetar.setText(metar);
-                    textViewConditions.setText(conditions);
-                    textViewTemperature.setText(temperature);
-                    textViewDewpoint.setText(dewpoint);
-                    textViewPressure.setText(pressure);
-                    textViewWinds.setText(winds);
-                    textViewVisibility.setText(visibility);
-                    textViewCeiling.setText(ceiling);
-                    textViewClouds.setText(clouds);
-                    stopRefreshing();
-                }
-            });
-
+            weatherValues = getMetar(ICAO);
         } catch (IOException e) {
             e.printStackTrace();
             runOnUiThread(new Runnable() {
@@ -228,14 +201,72 @@ public class MainActivity extends Activity {
                 }
             });
             stopRefreshing();
+            return;
         }
+
+        String conditions = weatherValues.get("conditions");
+        String airportDescription = conditions;
+        if (!isNullOrEmpty(conditions)) {
+            int leftBracket = conditions.indexOf("(");
+            int rightBracket = conditions.indexOf(")");
+            if (leftBracket != -1 && rightBracket != -1) {
+                airportDescription = conditions.substring(leftBracket + 1, rightBracket);
+            }
+        }
+        savedPreference.addSaved(getBaseContext(), PrefsName.HISTORY, new Airport(textICAO, airportDescription));
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textViewMetar.setText(weatherValues.get("metar"));
+                textViewConditions.setText(weatherValues.get("conditions"));
+                textViewTemperature.setText(weatherValues.get("temperature"));
+                textViewDewpoint.setText(weatherValues.get("dewpoint"));
+                textViewPressure.setText(weatherValues.get("pressure"));
+                textViewWinds.setText(weatherValues.get("winds"));
+                textViewVisibility.setText(weatherValues.get("visibility"));
+                textViewCeiling.setText(weatherValues.get("ceiling"));
+                textViewClouds.setText(weatherValues.get("clouds"));
+                stopRefreshing();
+            }
+        });
+    }
+
+    public Map<String, String> getMetar(String ICAO) throws IOException {
+        Document doc;
+        String link = "https://aviationweather.gov/metar/data?ids=" + ICAO + "&format=decoded&date=&hours=0";
+        String link2 = "http://aviationweather.gov/adds/metars/?chk_metars=ON&hoursStr=most+recent+only&station_ids=" + ICAO + "&submitmet=Get+info&std_trans=translated";
+        doc = Jsoup.connect(link).timeout(30000).get();
+
+        final String metar = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(2) > td:nth-child(2)").text();
+        final String conditions = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(1) > td:nth-child(2)").text();
+        final String temperature = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(3) > td:nth-child(2)").text();
+        final String dewpoint = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(4) > td:nth-child(2)").text();
+        final String pressure = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(5) > td:nth-child(2)").text();
+        final String winds = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(6) > td:nth-child(2)").text();
+        final String visibility = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(7) > td:nth-child(2)").text();
+        final String ceiling = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(8) > td:nth-child(2)").text();
+        final String clouds = doc.select("#awc_main_content_wrap > table:nth-child(3) > tbody > tr:nth-child(9) > td:nth-child(2)").text();
+
+        Map<String, String> values = new HashMap<>();
+        values.put("metar", metar);
+        values.put("conditions", conditions);
+        values.put("temperature", temperature);
+        values.put("dewpoint", dewpoint);
+        values.put("pressure", pressure);
+        values.put("winds", winds);
+        values.put("visibility", visibility);
+        values.put("ceiling", ceiling);
+        values.put("clouds", clouds);
+
+        return values;
     }
 
     private void writeMetar(final String ICAO) {
         Thread myThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                getMetar(ICAO);
+                setMetar(ICAO);
                 stopRefreshing();
             }
         });
@@ -290,10 +321,20 @@ public class MainActivity extends Activity {
                 startActivityForResult(intentNew, 1);
                 return true;
             case R.id.set_bookmark:
-                if (textICAO.length() == 4 && textViewConditions.getText() != null && !textViewConditions.getText().equals("")) {
+                final CharSequence conditionsText = textViewConditions.getText();
+                if (textICAO.length() == 4 && conditionsText != null && !conditionsText.equals("")) {
+                    final String conditions = conditionsText.toString();
                     if (!savedPreference.isItemSaved(getApplicationContext(), PrefsName.FAVORITE, textICAO)) {
+                        String airportDescription = textICAO;
+                        if (!isNullOrEmpty(conditions)) {
+                            int leftBracket = conditions.indexOf("(");
+                            int rightBracket = conditions.indexOf(")");
+                            if (leftBracket != -1 && rightBracket != -1) {
+                                airportDescription = conditions.substring(leftBracket + 1, rightBracket);
+                            }
+                        }
                         savedPreference.addSaved(getBaseContext(), PrefsName.FAVORITE,
-                                new Airport(textICAO, textViewConditions.getText().toString().substring(textViewConditions.getText().toString().indexOf("(") + 1, textViewConditions.getText().toString().indexOf(")"))));
+                                new Airport(textICAO, airportDescription));
                         Toast.makeText(this, getString(R.string.add_bookmark), Toast.LENGTH_SHORT).show();
                     }
                     invalidateOptionsMenu();
